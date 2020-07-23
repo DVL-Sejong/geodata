@@ -1,0 +1,24 @@
+{
+  "name": "geodata",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "delaunator": "^4.0.1",
+    "save": "^2.4.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seongbuming/geodata.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/seongbuming/geodata/issues"
+  },
+  "homepage": "https://github.com/seongbuming/geodata#readme"
+}
