@@ -19,14 +19,19 @@ const lines = {
 const triangles = delaunay.triangles;
 for (let i = 0; i < triangles.length; i += 3) {
   for (let j = 0; j < 3; j++) {
+    const origin = triangles[i+j];
+    const destination = triangles[i+((j+1)%3)];
     lines.features.push({
       type: 'Feature',
-      properties: {},
+      properties: {
+        origin: origin,
+        destination: destination
+      },
       geometry: {
         type: 'LineString',
         coordinates: [
-          points[triangles[i+j]],
-          points[triangles[i+((j+1)%3)]]
+          points[origin],
+          points[destination]
         ]
       }
     });
