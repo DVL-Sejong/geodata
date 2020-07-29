@@ -12,38 +12,30 @@ for (let feature of geodata.features) {
 }
 const delaunay = Delaunator.from(points);
 
-let minLon = Infinity, minLat = Infinity, maxLon = -Infinity, maxLat = -Infinity;
-for (let point of points) {
-  if (point[0] < minLon) minLon = point[0];
-  if (point[1] < minLat) minLat = point[1];
-  if (point[0] > maxLon) maxLon = point[0];
-  if (point[1] > maxLat) maxLat = point[1];
-}
-
-const result = {
+const lines = {
   type: 'FeatureCollection',
   features: []
 };
 const triangles = delaunay.triangles;
 for (let i = 0; i < triangles.length; i += 3) {
-  const feature = {
-    type: 'Feature',
-    properties: {},
-    geometry: {
-      type: 'Polygon',
-      coordinates: [[
-        points[triangles[i]],
-        points[triangles[i+1]],
-        points[triangles[i+2]]
-      ]]
-    }
-  };
-
-  result.features.push(feature);
+  for (let j = 0; j < 3; j++) {
+    lines.features.push({
+      type: 'Feature',
+      properties: {},
+      geometry: {
+        type: 'LineString',
+        coordinates: [
+          points[triangles[i+j]],
+          points[triangles[i+((j+1)%3)]]
+        ]
+      }
+    });
+  }
 }
 
-const output = JSON.stringify(result);
+const output = JSON.stringify(lines);
 fs.writeFile(path.resolve(__dirname, '../data/kr_village_delaunay.json'), output, 'utf8', (err) => {
   if (err) throw err;
-  console.log('input:', geodata.features.length, ' delaunay:', result.features.length);
 });
+
+console.log('input:', geodata.features.length, ' delaunay:', lines.features.length);
