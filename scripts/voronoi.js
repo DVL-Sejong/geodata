@@ -31,10 +31,11 @@ for (let i = from; i < to; i++) {
   const feature = voronoi.features[i];
   feature.properties = {
     ...feature.properties,
-    ...geodata.features[i].properties
+    ...geodata.features[i].properties,
+    osmcoord: geodata.features[i].geometry.coordinates
   };
 
-  const multipolygon = [];
+  /*const multipolygon = [];
   for (let boundcoord of boundcoords) {
     const boundpolygon = turf.polygon(boundcoord);
     const intersection = turf.intersect(feature, boundpolygon);
@@ -47,13 +48,13 @@ for (let i = from; i < to; i++) {
     feature.geometry = multipolygon;
   } else if (multipolygon.length == 1) {
     feature.geometry = multipolygon[0];
-  }
+  }*/
 
   result.features.push(feature);
 }
 
 const output = JSON.stringify(result);
-fs.writeFile(path.resolve(__dirname, `../data/kr_village_voronoi_${from}-${to}.json`), output, 'utf8', (err) => {
+fs.writeFile(path.resolve(__dirname, '../data/kr_village_voronoi.json'), output, 'utf8', (err) => {
   if (err) throw err;
   console.log('input:', geodata.features.length, ' voronoi:', voronoi.features.length, ' output:', result.features.length);
 });
