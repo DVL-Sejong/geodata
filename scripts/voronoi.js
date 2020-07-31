@@ -32,6 +32,7 @@ for (let i = from; i < to; i++) {
   feature.properties = {
     ...feature.properties,
     ...geodata.features[i].properties,
+    id: i,
     osmcoord: geodata.features[i].geometry.coordinates
   };
 
