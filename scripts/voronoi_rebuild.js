@@ -8,7 +8,7 @@ const result = {
   features: []
 };
 for (let i = 0; i < voronoi.features.length; i++) {
-  voronoi.features[i].properties.edmlid = i;
+  voronoi.features[i].properties.emdlid = i;
 }
 
 const output = JSON.stringify(voronoi);
