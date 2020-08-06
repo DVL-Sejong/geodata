@@ -25,7 +25,18 @@ result = overpass.query(f'\
 ')
 
 elements = result.elements()
-for node in elements:
+for index, node in enumerate(elements):
+  print(f'processing... ({index}/{len(elements)})')
+  
+  breaked = False
+  for n in elements:
+    if node.id() < n.id(): continue
+    elif node.lon() == n.lon() and node.lat() == n.lat() and node.id() > n.id():
+      print(f'{node.id()} duplicates with {n.id()}')
+      breaked = True
+      break
+  if breaked: continue
+
   name = node.tag('name')
   name_ko = node.tag('name:ko')
   name_en = node.tag('name:en')

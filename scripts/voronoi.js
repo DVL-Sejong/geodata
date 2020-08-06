@@ -26,8 +26,6 @@ for (let i = from; i < to; i++) {
   if (!voronoi.features[i])
     continue;
 
-  console.log(`processing... (${i}/${to})`);
-
   const feature = voronoi.features[i];
   feature.properties = {
     ...feature.properties,
