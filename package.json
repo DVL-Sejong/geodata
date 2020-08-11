@@ -6,6 +6,7 @@
   "dependencies": {
     "@turf/turf": "^5.1.6",
     "delaunator": "^4.0.1",
+    "python-shell": "^2.0.1",
     "save": "^2.4.0"
   },
   "devDependencies": {},
