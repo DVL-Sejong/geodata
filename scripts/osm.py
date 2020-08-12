@@ -24,18 +24,23 @@ result = overpass.query(f'\
   out;\
 ')
 
+buf = {}
 elements = result.elements()
 for index, node in enumerate(elements):
-  print(f'processing... ({index}/{len(elements)})')
-  
-  breaked = False
+  '''breaked = False
   for n in elements:
     if node.id() < n.id(): continue
     elif node.lon() == n.lon() and node.lat() == n.lat() and node.id() > n.id():
       print(f'{node.id()} duplicates with {n.id()}')
       breaked = True
       break
-  if breaked: continue
+  if breaked: continue'''
+  key = f'{node.lon()},{node.lat()}'
+  if key in buf.keys():
+    print(f'node {node.id()} duplicates with node {buf[key]}')
+    continue
+  else:
+    buf[key] = node.id()
 
   name = node.tag('name')
   name_ko = node.tag('name:ko')
@@ -53,6 +58,7 @@ for index, node in enumerate(elements):
     },
     'properties': {
       'osmid': node.id(),
+      'emdlid': count,
       'name': name,
       'name:ko': name_ko,
       'name:en': name_en
@@ -64,4 +70,4 @@ for index, node in enumerate(elements):
 with open(f'./data/kr_{args.place}_osm.json', 'w', encoding='utf-8') as json_file:
   dump = json.dumps(geodata, indent=args.indent, ensure_ascii=False)
   json_file.write(dump)
-  print(f'{count} nodes saved.')
+  print(f'[osm-{args.place}] output:', count)
