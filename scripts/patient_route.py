@@ -19,4 +19,4 @@ route_frame['VillageCellID'] = pd.Series(list(cell_data[0].values()), index=list
 route_frame['CityCellID'] = pd.Series(list(cell_data[1].values()), index=list(cell_data[1].keys()), dtype=np.dtype('int32'))
 #route_frame.assign(emdlid=series)
 print(route_frame)
-route_frame.drop('geometry', axis=1).to_csv('patient_route_cellid_output.csv')
+route_frame.drop(['geometry', 'Memo'], axis=1).to_csv('patient_route_cellid_output.csv')
