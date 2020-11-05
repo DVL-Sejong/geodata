@@ -6,7 +6,7 @@ from fiona.crs import from_epsg
 
 voronoi = [gpd.read_file('data/kr_village_voronoi_intersection.geojson'), gpd.read_file('data/kr_city_county_voronoi_intersection.geojson')]
 
-route = gpd.read_file('data/hidden/patient_route_0824.csv')
+route = gpd.read_file('data/hidden/patient_route_1106.csv')
 route = route.replace('', np.nan).dropna(subset=['Latitude', 'Longitude'])
 route_geom = gpd.points_from_xy(route.Longitude, route.Latitude)
 route_frame = gpd.GeoDataFrame(route, geometry=route_geom, crs=from_epsg(4326))
@@ -19,4 +19,4 @@ route_frame['VillageCellID'] = pd.Series(list(cell_data[0].values()), index=list
 route_frame['CityCellID'] = pd.Series(list(cell_data[1].values()), index=list(cell_data[1].keys()), dtype=np.dtype('int32'))
 #route_frame.assign(emdlid=series)
 print(route_frame)
-route_frame.drop(['geometry', 'Memo'], axis=1).to_csv('patient_route_cellid_output.csv')
+route_frame.drop(['geometry', 'PlaceName', 'Memo'], axis=1).to_csv('data/hidden/patient_route_cellid_output.csv')

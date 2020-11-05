@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const delaunay = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../data/kr_city_county_delaunay.geojson')));
-const intersection = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../data/kr_city_county_delaunay_intersection.geojson')));
+const delaunay = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../data/kr_village_delaunay.json')));
+const intersection = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../data/kr_village_delaunay_intersection.geojson')));
 
 const lines = {
   type: 'FeatureCollection',
@@ -33,7 +33,7 @@ for (let i = 0; i < Math.min(delaunay.features.length, intersection.features.len
 }
 
 const output = JSON.stringify(lines);
-fs.writeFile(path.resolve(__dirname, '../data/kr_city_county_delaunay_cropped.geojson'), output, 'utf8', (err) => {
+fs.writeFile(path.resolve(__dirname, '../data/kr_village_delaunay_cropped.geojson'), output, 'utf8', (err) => {
   if (err) throw err;
 });
 
