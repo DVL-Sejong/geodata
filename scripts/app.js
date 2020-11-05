@@ -4,7 +4,7 @@ const delaunay = require('./delaunay');
 
 const options = {
   scriptPath: 'scripts',
-  args: ['-p', 'city', '-i', 2]
+  args: ['-p', process.argv[2], '-i', 2]
 };
 PythonShell.run('osm.py', options, (err, data) => {
   if (err) throw err;

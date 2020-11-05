@@ -25,8 +25,8 @@ module.exports = function(place) {
       continue;
 
     // 보로노이와 윤곽선 교차 연산
-    const voronoiIntersection = turf.intersect(voronoi.features[i], boundPolygon.features[0]);
-    console.log(voronoiIntersection);
+    //const voronoiIntersection = turf.intersect(voronoi.features[i], boundPolygon.features[0]);
+    //console.log(voronoiIntersection);
 
     // properties 병합
     const feature = voronoi.features[i];
