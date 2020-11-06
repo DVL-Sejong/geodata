@@ -25,8 +25,8 @@ for (let i = 0; i < delaunay.features.length; i++) {
 }
 
 const output = JSON.stringify(data);
-fs.writeFile(path.resolve(__dirname, '../data/kr_village_cell_data.json'), output, 'utf8', (err) => {
+fs.writeFile(path.resolve(__dirname, '../data/kr_village_link_graph.json'), output, 'utf8', (err) => {
   if (err) throw err;
 });
 
-console.log('input(voronoi):', voronoi.features.length, ' input(delaunay):', delaunay.features.length, ' output:', Object.keys(datatable).length);
+console.log('input(voronoi):', voronoi.features.length, ' input(delaunay):', delaunay.features.length, ' output:', Object.keys(data).length);
