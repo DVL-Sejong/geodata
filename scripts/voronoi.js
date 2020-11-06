@@ -4,7 +4,7 @@ const turf = require('@turf/turf');
 
 module.exports = function(place) {
   // OSM 데이터 로드
-  const osmJson = fs.readFileSync(path.resolve(__dirname, `../data/kr_${place}_osm.json`));
+  const osmJson = fs.readFileSync(path.resolve(__dirname, `../data/kr_${place}_osm.geojson`));
   const osmData = JSON.parse(osmJson);
 
   // 보로노이 연산
@@ -55,6 +55,6 @@ module.exports = function(place) {
   }
 
   const output = JSON.stringify(result);
-  fs.writeFileSync(path.resolve(__dirname, `../data/kr_${place}_voronoi.json`), output, 'utf8');
+  fs.writeFileSync(path.resolve(__dirname, `../data/kr_${place}_voronoi.geojson`), output, 'utf8');
   console.log('[voronoi] input:', osmData.features.length, ' voronoi:', voronoi.features.length, ' output:', result.features.length);
 }
