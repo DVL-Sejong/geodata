@@ -4,12 +4,12 @@ const path = require('path');
 const voronoi = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../data/kr_village_voronoi_intersection.geojson')));
 const delaunay = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../data/kr_village_delaunay_intersection.geojson')));
 
-const datatable = {};
+const data = {};
 
 // voronoi
 for (let i = 0; i < voronoi.features.length; i++) {
   const properties = voronoi.features[i].properties;
-  datatable[properties.cellid] = {
+  data[properties.cellid] = {
     voronoiIndex: i
   };
 }
@@ -17,15 +17,15 @@ for (let i = 0; i < voronoi.features.length; i++) {
 // delaunay
 for (let i = 0; i < delaunay.features.length; i++) {
   const properties = delaunay.features[i].properties;
-  if (datatable[properties.origin] === undefined)
+  if (data[properties.origin] === undefined)
     continue;
-  if (datatable[properties.origin].links === undefined)
-    datatable[properties.origin].links = {};
-  datatable[properties.origin].links[properties.destination] = i;
+  if (data[properties.origin].links === undefined)
+  data[properties.origin].links = {};
+  data[properties.origin].links[properties.destination] = i;
 }
 
-const output = JSON.stringify(datatable);
-fs.writeFile(path.resolve(__dirname, '../data/kr_village_datatable.json'), output, 'utf8', (err) => {
+const output = JSON.stringify(data);
+fs.writeFile(path.resolve(__dirname, '../data/kr_village_cell_data.json'), output, 'utf8', (err) => {
   if (err) throw err;
 });
 
