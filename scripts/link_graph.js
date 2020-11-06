@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const voronoi = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../data/kr_city_county_voronoi_intersection.geojson')));
-const delaunay = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../data/kr_city_county_delaunay_intersection.geojson')));
+const voronoi = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../data/kr_village_voronoi_intersection.geojson')));
+const delaunay = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../data/kr_village_delaunay_intersection.geojson')));
 
 const data = {};
 
@@ -25,7 +25,7 @@ for (let i = 0; i < delaunay.features.length; i++) {
 }
 
 const output = JSON.stringify(data);
-fs.writeFile(path.resolve(__dirname, '../data/kr_city_county_link_graph.json'), output, 'utf8', (err) => {
+fs.writeFile(path.resolve(__dirname, '../data/kr_village_link_graph.json'), output, 'utf8', (err) => {
   if (err) throw err;
 });
 
