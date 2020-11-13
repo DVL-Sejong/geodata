@@ -37,7 +37,7 @@ for region_type in type_list:
       'type': 'Feature',
       'geometry': {
         'type': 'Point',
-        'coordinates': [osm['lon'], osm['lat']]
+        'coordinates': [float(osm['lon']), float(osm['lat'])]
       },
       'properties': {
         'osmid': osm['osm_id'],
