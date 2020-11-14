@@ -31,7 +31,7 @@ for region_type in type_list:
     'features': []
   }
   for index, region in enumerate(regions[region_type]):
-    osm = nominatim.query(f"{region['name']}, United Kingdom")
+    osm = nominatim.query(f"{region['name']}, England")
     osm = osm.toJSON()[0]
     feature = {
       'type': 'Feature',
