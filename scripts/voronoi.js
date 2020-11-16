@@ -2,16 +2,16 @@ const fs = require('fs');
 const path = require('path');
 const turf = require('@turf/turf');
 
-module.exports = function(place) {
+module.exports = function(country, place) {
   // OSM 데이터 로드
-  const osmJson = fs.readFileSync(path.resolve(__dirname, `../data/kr_${place}_osm.geojson`));
+  const osmJson = fs.readFileSync(path.resolve(__dirname, `../data/${country}_${place}_osm.geojson`));
   const osmData = JSON.parse(osmJson);
 
   // 보로노이 연산
   let voronoi = turf.voronoi(osmData, {});
 
   // 윤곽선 폴리곤 로드
-  const boundJson = fs.readFileSync(path.resolve(__dirname, '../data/kr_boundary_simplified_2.json'));
+  const boundJson = fs.readFileSync(path.resolve(__dirname, `../data/${country}_boundary.geojson`));
   const boundPolygon = JSON.parse(boundJson);
   const boundCoords = boundPolygon.features[0].geometry.coordinates;
 
@@ -55,6 +55,6 @@ module.exports = function(place) {
   }
 
   const output = JSON.stringify(result);
-  fs.writeFileSync(path.resolve(__dirname, `../data/kr_${place}_voronoi.geojson`), output, 'utf8');
+  fs.writeFileSync(path.resolve(__dirname, `../data/${country}_${place}_voronoi.geojson`), output, 'utf8');
   console.log('[voronoi] input:', osmData.features.length, ' voronoi:', voronoi.features.length, ' output:', result.features.length);
 }
