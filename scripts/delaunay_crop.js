@@ -1,9 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 
-const datatable = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../data/kr_village_datatable.json')));
-const delaunay = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../data/kr_village_delaunay.json')));
-const intersection = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../data/kr_village_delaunay_intersection.geojson')));
+const datatable = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../data/uk_ltla_link_graph.json')));
+const delaunay = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../data/uk_ltla_delaunay.geojson')));
+const intersection = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../data/uk_ltla_delaunay_intersection.geojson')));
 
 const lines = {
   type: 'FeatureCollection',
@@ -46,7 +46,7 @@ for (let i = 0; i < delaunay.features.length; i++) {
 }
 
 const output = JSON.stringify(lines);
-fs.writeFile(path.resolve(__dirname, '../data/kr_village_delaunay_cropped.geojson'), output, 'utf8', (err) => {
+fs.writeFile(path.resolve(__dirname, '../data/uk_ltla_delaunay_cropped.geojson'), output, 'utf8', (err) => {
   if (err) throw err;
 });
 
