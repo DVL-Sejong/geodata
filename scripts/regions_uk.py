@@ -45,6 +45,7 @@ with open('./data/uk_ltla_list.csv') as csv_file:
           'postcode': region_postcode
         }
       }
+      geodata['features']
 
     if region_type not in type_list:
       type_list.append(region_type)
