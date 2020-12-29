@@ -11,7 +11,7 @@ geodata = {
   'features': []
 }
 
-cnt = 0
+skipped = 0
 with open('./data/uk_ltla_list.csv') as csv_file:
   next(csv_file)
   reader = csv.reader(csv_file)
@@ -23,6 +23,9 @@ with open('./data/uk_ltla_list.csv') as csv_file:
     region_type = 'ltla'
     region_country = 'UK'
 
+    if region_postcode == 'E09000001' or region_postcode == 'E06000053': # City of London, Isles of Scilly
+      continue
+
     response = requests.get(f'https://findthatpostcode.uk/areas/{region_postcode}.json')
 
     if response.status_code >= 400:
@@ -31,8 +34,9 @@ with open('./data/uk_ltla_list.csv') as csv_file:
       response_data = response.json()
       name = response_data['data']['attributes']['name']
       if 'location' not in response_data['included'][0]['attributes']:
-        cnt = cnt + 1
+        skipped = skipped + 1
         continue
+
       location = response_data['included'][0]['attributes']['location']
 
       feature = {
@@ -90,4 +94,4 @@ for region_type in type_list:
   with open(f'./data/uk_{region_type}_regions.geojson', 'w', encoding='utf-8') as json_file:
     dump = json.dumps(geodata, ensure_ascii=False)
     json_file.write(dump)
-    print(f'[uk_{region_type}_regions] output:', len(geodata['features']), 'skipped:', cnt)
+    print(f'[uk_{region_type}_regions] output:', len(geodata['features']), 'skipped:', skipped)
