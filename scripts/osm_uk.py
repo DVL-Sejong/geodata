@@ -6,7 +6,7 @@ nominatim = Nominatim()
 region_list = []
 type_list = []
 regions = {}
-with open('./data/hidden/UK Coronavirus Cases 1112.csv') as csv_file:
+with open('./data/hidden/UK Coronavirus Cases 1229.csv') as csv_file:
   next(csv_file)
   reader = csv.reader(csv_file)
   for row in reader:

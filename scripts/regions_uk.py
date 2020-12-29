@@ -11,6 +11,7 @@ geodata = {
   'features': []
 }
 
+cnt = 0
 with open('./data/uk_ltla_list.csv') as csv_file:
   next(csv_file)
   reader = csv.reader(csv_file)
@@ -29,6 +30,9 @@ with open('./data/uk_ltla_list.csv') as csv_file:
     if response.status_code == 200:
       response_data = response.json()
       name = response_data['data']['attributes']['name']
+      if 'location' not in response_data['included'][0]['attributes']:
+        cnt = cnt + 1
+        continue
       location = response_data['included'][0]['attributes']['location']
 
       feature = {
@@ -45,9 +49,9 @@ with open('./data/uk_ltla_list.csv') as csv_file:
           'postcode': region_postcode
         }
       }
-      geodata['features']
+      geodata['features'].append(feature)
 
-    if region_type not in type_list:
+    '''if region_type not in type_list:
       type_list.append(region_type)
       regions[region_type] = []
     if region_name not in region_list:
@@ -81,9 +85,9 @@ for region_type in type_list:
         'postcode': region['postcode']
       }
     }
-    geodata['features'].append(feature)
+    geodata['features'].append(feature)'''
 
-  with open(f'./data/uk_{region_type}_osm.geojson', 'w', encoding='utf-8') as json_file:
+  with open(f'./data/uk_{region_type}_regions.geojson', 'w', encoding='utf-8') as json_file:
     dump = json.dumps(geodata, ensure_ascii=False)
     json_file.write(dump)
-    print(f'[osm-{region_type}] output:', len(geodata['features']))
+    print(f'[uk_{region_type}_regions] output:', len(geodata['features']), 'skipped:', cnt)
